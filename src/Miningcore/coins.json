@@ -6479,5 +6479,36 @@
         "explorerBlockLink": "https://explorer.cryptix-network.org/blocks/$hash$",
         "explorerTxLink": "https://explorer.cryptix-network.org/txs/{0}",
         "explorerAccountLink": "https://explorer.cryptix-network.org/addresses/{0}"
+    },
+    "pigeoncoin": {
+        "name": "Pigeoncoin",
+        "symbol": "PGN",
+        "family": "bitcoin",
+        "website": "https://pigeoncoin.org/",
+        "market": "https://coinmarketcap.com/currencies/pigeoncoin",
+        "twitter": "https://twitter.com/Pigeoncoin",
+        "telegram": "https://t.me/Pigeoncoin",
+        "discord": "https://discord.gg/SZcf63h",
+        "coinbaseHasher": {
+            "hash": "sha256d"
+        },
+        "headerHasher": {
+            "hash": "x21s"
+        },
+        "blockHasher": {
+            "hash": "reverse",
+            "args": [
+                {
+                    "hash": "x21s"
+                }
+            ]
+        },
+        "hasFounderFee": true,
+        "hasMasterNodes": true,
+        "foundersRewardAddress": ["rLzD7RxVS1QMZ5yYrmoUvfnTNuzgUqJVVK"],
+        "shareMultiplier": 256,
+        "explorerBlockLink": "http://explorer.pigeoncoin.xyz/block/$height$",
+        "explorerTxLink": "http://explorer.pigeoncoin.xyz/tx/{0}",
+        "explorerAccountLink": "http://explorer.pigeoncoin.xyz/address/{0}"
     }
 }
