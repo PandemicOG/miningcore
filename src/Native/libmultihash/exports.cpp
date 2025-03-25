@@ -69,6 +69,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "megabtx.h"
 #include "xelishash/xelishash.hpp"
 #include "xelisv2.h"
+#include "x11kvs.h"
+#include "argon2d.h"
 
 #ifdef _WIN32
 #include "blake2/ref/blake2.h"
@@ -147,6 +149,11 @@ extern "C" MODULE_API void phi2_export(const char* input, char* output, uint32_t
 extern "C" MODULE_API void x11_export(const char* input, char* output, uint32_t input_len)
 {
 	x11_hash(input, output, input_len);
+}
+
+extern "C" MODULE_API void x11kvs_export(const char* input, char* output, uint32_t input_len)
+{
+	x11kvs_hash(input, output, input_len);
 }
 
 extern "C" MODULE_API void x13_export(const char* input, char* output, uint32_t input_len)
@@ -482,4 +489,24 @@ extern "C" MODULE_API void xelis_hash_v2_export(const unsigned char *input, unsi
 extern "C" MODULE_API void xelisv2_pepew_export(const char* input, char* output, uint32_t input_len)
 {
 	xelisv2_pepew_hash(input, output, input_len);
+}
+
+extern "C" MODULE_API void argon2d250_export(const char* input, char* output, uint32_t input_len)
+{
+	argon2d250_hash(input, output, input_len);
+}
+
+extern "C" MODULE_API void argon2d500_export(const char* input, char* output, uint32_t input_len)
+{
+	argon2d500_hash(input, output, input_len);
+}
+
+extern "C" MODULE_API void argon2d1000_export(const char* input, char* output, uint32_t input_len)
+{
+	argon2d1000_hash(input, output, input_len);
+}
+
+extern "C" MODULE_API void argon2d16000_export(const char* input, char* output, uint32_t input_len)
+{
+	argon2d16000_hash(input, output, input_len);
 }
