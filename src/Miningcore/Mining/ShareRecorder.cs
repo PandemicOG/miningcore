@@ -20,6 +20,7 @@ using Polly.CircuitBreaker;
 using Contract = Miningcore.Contracts.Contract;
 using Share = Miningcore.Blockchain.Share;
 using static Miningcore.Util.ActionUtils;
+//using Miningcore.Persistence.Postgres.Repositories;
 
 namespace Miningcore.Mining;
 
@@ -41,7 +42,7 @@ public class ShareRecorder : BackgroundService
         Contract.RequiresNonNull(mapper);
         Contract.RequiresNonNull(shareRepo);
         Contract.RequiresNonNull(blockRepo);
-        Contract.RequiresNonNull(workerRepo);
+        //Contract.RequiresNonNull(workerRepo);
         Contract.RequiresNonNull(jsonSerializerSettings);
         Contract.RequiresNonNull(messageBus);
 
@@ -53,7 +54,7 @@ public class ShareRecorder : BackgroundService
 
         this.shareRepo = shareRepo;
         this.blockRepo = blockRepo;
-        this.workerRepo = workerRepo;
+        this.workerRepo = workerRepo == null ? new Persistence.Postgres.Repositories.MinerWorkerRepository(mapper) : workerRepo;
 
         pools = clusterConfig.Pools.ToDictionary(x => x.Id, x => x);
 
@@ -97,25 +98,38 @@ public class ShareRecorder : BackgroundService
             // Insert blocks
             foreach(var share in shares)
             {
-                if(share.ShareDifficulty > 0)
+                try
                 {
-                    var existingWorkerStats = await workerRepo.GetWorkerStatsAsync(con, tx, share.PoolId, share.Miner, share.Worker);
-                    if(existingWorkerStats == null)
+                    logger.Warn("Processing Best Difficulty Share");
+                    if(share.ShareDifficulty > 0)
                     {
-                        existingWorkerStats = new MinerWorkerStats();
-                    }
-                    if(existingWorkerStats.BestDifficulty < share.ShareDifficulty)
-                    {
-                        var workerStatsEntity = new MinerWorkerStats
+                        logger.Warn("Share has difficulty of: " + share.ShareDifficulty);
+                        var existingWorkerStats = await workerRepo.GetWorkerStatsAsync(con, tx, share.PoolId, share.Miner, share.Worker);
+                        logger.Warn("Retrieved existing worker record");
+                        if(existingWorkerStats == null)
                         {
-                            BestDifficulty = share.ShareDifficulty,
-                            PoolId = share.PoolId,
-                            Miner = share.Miner,
-                            Worker = share.Worker,
-                            Created = share.Created,
-                        };
-                        await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
+                            logger.Warn("No existing worker record");
+                            existingWorkerStats = new MinerWorkerStats();
+                        }
+                        if(existingWorkerStats.BestDifficulty < share.ShareDifficulty)
+                        {
+                            logger.Warn("Worker Best is less than new Share Best");
+                            var workerStatsEntity = new MinerWorkerStats
+                            {
+                                BestDifficulty = share.ShareDifficulty,
+                                PoolId = share.PoolId,
+                                Miner = share.Miner,
+                                Worker = share.Worker,
+                                Created = share.Created,
+                            };
+                            logger.Warn("Upserting new worker stats record");
+                            await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
+                        }
                     }
+                }
+                catch(Exception ex)
+                {
+                    logger.Warn(ex.Message);
                 }
 
                 if(!share.IsBlockCandidate)
