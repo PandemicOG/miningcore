@@ -11,3 +11,5 @@ CREATE TABLE workerstats
 CREATE INDEX IDX_WORKERSTATS_POOL_CREATED on workerstats(poolid, created);
 CREATE INDEX IDX_WORKERSTATS_POOL_MINER_CREATED on workerstats(poolid, miner, created);
 CREATE INDEX IDX_WORKERSTATS_POOL_MINER_WORKER_CREATED_BESTDIFFICULTY on workerstats(poolid,miner,worker,created desc,bestdifficulty);
+
+ALTER TABLE blocks ADD COLUMN IF NOT EXISTS worker TEXT NULL;
