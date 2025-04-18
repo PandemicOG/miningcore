@@ -17,5 +17,6 @@ public class Block
     public string Source { get; set; }
     public string Hash { get; set; }
     public string Worker { get; set; }
+    public double Difficulty { get; set; }
     public DateTime Created { get; set; }
 }
