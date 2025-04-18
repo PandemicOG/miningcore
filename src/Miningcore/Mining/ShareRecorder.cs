@@ -123,7 +123,7 @@ public class ShareRecorder : BackgroundService
                                 Created = share.Created,
                             };
                             logger.Warn("Upserting new worker stats record");
-                            await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
+                            //await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
                         }
                     }
                 }

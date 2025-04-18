@@ -77,6 +77,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Balance, Persistence.Postgres.Entities.Balance>();
         CreateMap<Payment, Persistence.Postgres.Entities.Payment>();
         CreateMap<MinerSettings, Persistence.Postgres.Entities.MinerSettings>();
+        CreateMap<MinerWorkerStats, Persistence.Postgres.Entities.MinerWorkerStats>();
         CreateMap<PoolStats, Persistence.Postgres.Entities.PoolStats>();
 
         CreateMap<MinerWorkerPerformanceStats, Persistence.Postgres.Entities.MinerWorkerPerformanceStats>()
@@ -96,6 +97,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Persistence.Postgres.Entities.BalanceChange, BalanceChange>();
         CreateMap<Persistence.Postgres.Entities.PoolStats, PoolStats>();
         CreateMap<Persistence.Postgres.Entities.MinerSettings, MinerSettings>();
+        CreateMap<Persistence.Postgres.Entities.MinerWorkerStats, MinerWorkerStats>();
         CreateMap<Persistence.Postgres.Entities.MinerWorkerPerformanceStats, MinerWorkerPerformanceStats>();
         CreateMap<Persistence.Postgres.Entities.MinerWorkerPerformanceStats, Api.Responses.MinerPerformanceStats>();
 
