@@ -771,7 +771,7 @@ public class PoolApiController : ApiControllerBase
     }
 
     [HttpGet("{poolId}/miners/{address}/workerstats")]
-    public async Task<Responses.WorkerStats> GetWorkerStatsAsync(string poolId, string address)
+    public async Task<Responses.WorkerStats[]> GetWorkerStatsAsync(string poolId, string address)
     {
         var pool = GetPool(poolId);
 
@@ -786,7 +786,7 @@ public class PoolApiController : ApiControllerBase
         if(result == null)
             throw new ApiException("No settings found", HttpStatusCode.NotFound);
 
-        return mapper.Map<Responses.WorkerStats>(result);
+        return mapper.Map<Responses.WorkerStats[]>(result);
     }
 
     #endregion // Actions

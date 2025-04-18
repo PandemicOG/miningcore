@@ -6,3 +6,8 @@ public class WorkerStats
     public string Worker { get; set; }
     public double BestDifficulty { get; set; }
 }
+
+public class WorkerStatsResponse
+{
+    public WorkerStats[] WorkerStats { get; set; }
+}

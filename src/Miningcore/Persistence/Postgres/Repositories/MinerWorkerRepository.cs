@@ -24,13 +24,13 @@ public class MinerWorkerRepository : IMinerWorkerRepository
         return mapper.Map<MinerWorkerStats>(entity);
     }
 
-    public async Task<MinerWorkerStats> GetWorkerStatsAsync(IDbConnection con, IDbTransaction tx, string poolId, string miner)
+    public async Task<MinerWorkerStats[]> GetWorkerStatsAsync(IDbConnection con, IDbTransaction tx, string poolId, string miner)
     {
         const string query = @"SELECT * FROM workerstats WHERE poolid = @poolId AND miner = @miner";
 
-        var entity = await con.QuerySingleOrDefaultAsync<Entities.MinerWorkerStats>(query, new { poolId, miner }, tx);
-
-        return mapper.Map<MinerWorkerStats>(entity);
+        return (await con.QueryAsync<Entities.MinerWorkerStats>(new CommandDefinition(query, new { poolId, miner })))
+            .Select(mapper.Map<MinerWorkerStats>)
+            .ToArray();
     }
 
     public Task UpdateWorkerStatsAsync(IDbConnection con, IDbTransaction tx, MinerWorkerStats settings)
