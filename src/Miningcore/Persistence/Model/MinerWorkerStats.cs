@@ -7,4 +7,5 @@ public class MinerWorkerStats
     public string Worker { get; set; }
     public double BestDifficulty { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Updated { get; set; }
 }
