@@ -99,7 +99,7 @@ public class ShareRecorder : BackgroundService
                 var blockEntity = mapper.Map<Block>(share);
                 blockEntity.Status = BlockStatus.Pending;
                 blockEntity.Worker = share.Worker;
-                blockEntity.Difficulty = share.Difficulty;
+                blockEntity.Difficulty = share.ShareDifficulty;
                 await blockRepo.InsertAsync(con, tx, blockEntity);
 
                 if(pools.TryGetValue(share.PoolId, out var poolConfig))
