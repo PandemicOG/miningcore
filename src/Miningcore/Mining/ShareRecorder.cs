@@ -33,6 +33,7 @@ public class ShareRecorder : BackgroundService
         JsonSerializerSettings jsonSerializerSettings,
         IShareRepository shareRepo,
         IBlockRepository blockRepo,
+        IMinerWorkerRepository workerRepo,
         ClusterConfig clusterConfig,
         IMessageBus messageBus)
     {
@@ -40,6 +41,7 @@ public class ShareRecorder : BackgroundService
         Contract.RequiresNonNull(mapper);
         Contract.RequiresNonNull(shareRepo);
         Contract.RequiresNonNull(blockRepo);
+        Contract.RequiresNonNull(workerRepo);
         Contract.RequiresNonNull(jsonSerializerSettings);
         Contract.RequiresNonNull(messageBus);
 
@@ -51,6 +53,7 @@ public class ShareRecorder : BackgroundService
 
         this.shareRepo = shareRepo;
         this.blockRepo = blockRepo;
+        this.workerRepo = workerRepo;
 
         pools = clusterConfig.Pools.ToDictionary(x => x.Id, x => x);
 
@@ -61,6 +64,7 @@ public class ShareRecorder : BackgroundService
     private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
     private readonly IShareRepository shareRepo;
     private readonly IBlockRepository blockRepo;
+    private readonly IMinerWorkerRepository workerRepo;
     private readonly IConnectionFactory cf;
     private readonly JsonSerializerSettings jsonSerializerSettings;
     private readonly IMessageBus messageBus;
@@ -93,6 +97,27 @@ public class ShareRecorder : BackgroundService
             // Insert blocks
             foreach(var share in shares)
             {
+                if(share.ShareDifficulty > 0)
+                {
+                    var existingWorkerStats = await workerRepo.GetWorkerStatsAsync(con, tx, share.PoolId, share.Miner, share.Worker);
+                    if(existingWorkerStats == null)
+                    {
+                        existingWorkerStats = new MinerWorkerStats();
+                    }
+                    if(existingWorkerStats.BestDifficulty < share.ShareDifficulty)
+                    {
+                        var workerStatsEntity = new MinerWorkerStats
+                        {
+                            BestDifficulty = share.ShareDifficulty,
+                            PoolId = share.PoolId,
+                            Miner = share.Miner,
+                            Worker = share.Worker,
+                            Created = share.Created,
+                        };
+                        await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
+                    }
+                }
+
                 if(!share.IsBlockCandidate)
                     continue;
 
