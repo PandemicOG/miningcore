@@ -21,9 +21,9 @@ public class BlockRepository : IBlockRepository
 
         const string query =
             @"INSERT INTO blocks(poolid, blockheight, networkdifficulty, status, type, transactionconfirmationdata,
-                miner, reward, effort, minereffort, confirmationprogress, source, hash, created)
+                miner, reward, effort, minereffort, confirmationprogress, source, hash, created, worker)
             VALUES(@poolid, @blockheight, @networkdifficulty, @status, @type, @transactionconfirmationdata,
-                @miner, @reward, @effort, @minereffort, @confirmationprogress, @source, @hash, @created)";
+                @miner, @reward, @effort, @minereffort, @confirmationprogress, @source, @hash, @created, @worker)";
 
         await con.ExecuteAsync(query, mapped, tx);
     }
