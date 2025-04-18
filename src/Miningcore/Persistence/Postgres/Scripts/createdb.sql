@@ -120,3 +120,19 @@ CREATE TABLE minerstats
 CREATE INDEX IDX_MINERSTATS_POOL_CREATED on minerstats(poolid, created);
 CREATE INDEX IDX_MINERSTATS_POOL_MINER_CREATED on minerstats(poolid, miner, created);
 CREATE INDEX IDX_MINERSTATS_POOL_MINER_WORKER_CREATED_HASHRATE on minerstats(poolid,miner,worker,created desc,hashrate);
+
+CREATE TABLE workerstats
+(
+	id BIGSERIAL NOT NULL PRIMARY KEY,
+	poolid TEXT NOT NULL,
+	miner TEXT NOT NULL,
+	worker TEXT NOT NULL,
+  bestdifficulty DOUBLE PRECISION NOT NULL DEFAULT 0,
+	created TIMESTAMPTZ NOT NULL
+);
+
+CREATE INDEX IDX_WORKERSTATS_POOL_CREATED on workerstats(poolid, created);
+CREATE INDEX IDX_WORKERSTATS_POOL_MINER_CREATED on workerstats(poolid, miner, created);
+CREATE INDEX IDX_WORKERSTATS_POOL_MINER_WORKER_CREATED_BESTDIFFICULTY on workerstats(poolid,miner,worker,created desc,bestdifficulty);
+
+ALTER TABLE blocks ADD COLUMN IF NOT EXISTS worker TEXT NULL;
