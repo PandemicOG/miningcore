@@ -4,7 +4,6 @@ using Miningcore.Configuration;
 using Miningcore.Persistence.Model;
 using Miningcore.Persistence.Model.Projections;
 using Newtonsoft.Json.Linq;
-using MinerStats = Miningcore.Persistence.Model.Projections.MinerStats;
 
 namespace Miningcore;
 
@@ -70,6 +69,9 @@ public class AutoMapperProfile : Profile
         CreateMap<WorkerPerformanceStats, Api.Responses.WorkerPerformanceStats>();
         CreateMap<WorkerPerformanceStatsContainer, Api.Responses.WorkerPerformanceStatsContainer>();
         CreateMap<MinerWorkerPerformanceStats, Api.Responses.MinerPerformanceStats>();
+        CreateMap<MinerWorkerStats, Api.Responses.MinerStats>();
+
+
 
         // PostgreSQL
         CreateMap<Persistence.Model.Share, Persistence.Postgres.Entities.Share>();

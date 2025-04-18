@@ -98,22 +98,19 @@ public class ShareRecorder : BackgroundService
             // Insert blocks
             foreach(var share in shares)
             {
+
+                //if Worker stats schema is configured, we store best difficulty for worker
                 try
                 {
-                    logger.Warn("Processing Best Difficulty Share");
                     if(share.ShareDifficulty > 0)
                     {
-                        logger.Warn("Share has difficulty of: " + share.ShareDifficulty);
                         var existingWorkerStats = await workerRepo.GetWorkerStatsAsync(con, tx, share.PoolId, share.Miner, share.Worker);
-                        logger.Warn("Retrieved existing worker record");
                         if(existingWorkerStats == null)
                         {
-                            logger.Warn("No existing worker record");
                             existingWorkerStats = new MinerWorkerStats();
                         }
                         if(existingWorkerStats.BestDifficulty < share.ShareDifficulty)
                         {
-                            logger.Warn("Worker Best is less than new Share Best");
                             var workerStatsEntity = new MinerWorkerStats
                             {
                                 BestDifficulty = share.ShareDifficulty,
@@ -122,7 +119,6 @@ public class ShareRecorder : BackgroundService
                                 Worker = share.Worker,
                                 Created = share.Created,
                             };
-                            logger.Warn("Upserting new worker stats record");
                             await workerRepo.UpdateWorkerStatsAsync(con, tx, workerStatsEntity);
                         }
                     }
@@ -130,6 +126,7 @@ public class ShareRecorder : BackgroundService
                 catch(Exception ex)
                 {
                     logger.Warn(ex.Message);
+                    logger.Warn(() => $"Unable to update workers stats. Confirm you have the latest DB Schema. | {ex.Message}");
                 }
 
                 if(!share.IsBlockCandidate)

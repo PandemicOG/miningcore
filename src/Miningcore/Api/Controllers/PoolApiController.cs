@@ -31,6 +31,7 @@ public class PoolApiController : ApiControllerBase
         minerRepo = ctx.Resolve<IMinerRepository>();
         shareRepo = ctx.Resolve<IShareRepository>();
         paymentsRepo = ctx.Resolve<IPaymentRepository>();
+        workerRepo = ctx.Resolve<IMinerWorkerRepository>();
         clock = ctx.Resolve<IMasterClock>();
         pools = ctx.Resolve<ConcurrentDictionary<string, IMiningPool>>();
         adcp = _adcp;
@@ -41,6 +42,7 @@ public class PoolApiController : ApiControllerBase
     private readonly IPaymentRepository paymentsRepo;
     private readonly IMinerRepository minerRepo;
     private readonly IShareRepository shareRepo;
+    private readonly IMinerWorkerRepository workerRepo;
     private readonly IMasterClock clock;
     private readonly IActionDescriptorCollectionProvider adcp;
     private readonly ConcurrentDictionary<string, IMiningPool> pools;
@@ -766,6 +768,25 @@ public class PoolApiController : ApiControllerBase
             var result = await minerRepo.GetSettingsAsync(con, tx, mapped.PoolId, mapped.Address);
             return mapper.Map<Responses.MinerSettings>(result);
         });
+    }
+
+    [HttpGet("{poolId}/miners/{address}/workerstats")]
+    public async Task<Responses.WorkerStats> GetWorkerStatsAsync(string poolId, string address)
+    {
+        var pool = GetPool(poolId);
+
+        if(string.IsNullOrEmpty(address))
+            throw new ApiException("Invalid or missing miner address", HttpStatusCode.NotFound);
+
+        if(pool.Template.Family == CoinFamily.Ethereum)
+            address = address.ToLower();
+
+        var result = await cf.Run(con => workerRepo.GetWorkerStatsAsync(con, null, pool.Id, address));
+
+        if(result == null)
+            throw new ApiException("No settings found", HttpStatusCode.NotFound);
+
+        return mapper.Map<Responses.WorkerStats>(result);
     }
 
     #endregion // Actions
