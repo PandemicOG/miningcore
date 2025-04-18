@@ -15,6 +15,7 @@ using NBitcoin.DataEncoders;
 using Newtonsoft.Json.Linq;
 using Contract = Miningcore.Contracts.Contract;
 using Transaction = NBitcoin.Transaction;
+using System.Numerics;
 
 namespace Miningcore.Blockchain.Bitcoin;
 
@@ -434,7 +435,8 @@ public class BitcoinJob
         var headerValue = new uint256(headerHash);
 
         // calc share-diff
-        var shareDiff = (double) new BigRational(BitcoinConstants.Diff1, headerHash.ToBigInteger()) * shareMultiplier;
+        var diff1 = coin.Diff1 != null ? BigInteger.Parse(coin.Diff1, NumberStyles.HexNumber) : BitcoinConstants.Diff1; 
+		var shareDiff = (double) new BigRational(diff1, headerHash.ToBigInteger()) * shareMultiplier;
         var stratumDifficulty = context.Difficulty;
         var ratio = shareDiff / stratumDifficulty;
 
@@ -525,10 +527,11 @@ public class BitcoinJob
             {
                 var separator = new byte[] { 0x01 };
                 var mweb = BlockTemplate.Extra.SafeExtensionDataAs<MwebBlockTemplateExtra>();
-                var mwebRaw = mweb.Mweb.HexToByteArray();
-
-                bs.ReadWrite(separator);
-                bs.ReadWrite(mwebRaw);
+                if (mweb != null && mweb.Mweb != null) {
+                    var mwebRaw = mweb.Mweb.HexToByteArray();
+                    bs.ReadWrite(separator);
+                    bs.ReadWrite(mwebRaw);
+                }
             }
 
             return stream.ToArray();

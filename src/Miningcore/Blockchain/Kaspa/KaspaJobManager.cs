@@ -239,18 +239,18 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 return new CryptixJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);   
             case "CAS":
             case "HTN":
-                if(customBlockHeaderHasher is not Blake3)
+                if(customBlockHeaderHasher is not Blake3IHash)
                 {
                     string coinbaseBlockHash = KaspaConstants.CoinbaseBlockHash;
                     byte[] hashBytes = Encoding.UTF8.GetBytes(coinbaseBlockHash.PadRight(32, '\0')).Take(32).ToArray();
-                    customBlockHeaderHasher = new Blake3(hashBytes);
+                    customBlockHeaderHasher = new Blake3IHash(hashBytes);
                 }
 
-                if(customCoinbaseHasher is not Blake3)
-                        customCoinbaseHasher = new Blake3();
+                if(customCoinbaseHasher is not Blake3IHash)
+                        customCoinbaseHasher = new Blake3IHash();
 
-                if(customShareHasher is not Blake3)
-                    customShareHasher = new Blake3();
+                if(customShareHasher is not Blake3IHash)
+                    customShareHasher = new Blake3IHash();
 
                 return new PyrinJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
             case "KLS":
@@ -259,8 +259,8 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 if(customBlockHeaderHasher is not Blake2b)
                     customBlockHeaderHasher = new Blake2b(Encoding.UTF8.GetBytes(KaspaConstants.CoinbaseBlockHash));
 
-                if(customCoinbaseHasher is not Blake3)
-                    customCoinbaseHasher = new Blake3();
+                if(customCoinbaseHasher is not Blake3IHash)
+                    customCoinbaseHasher = new Blake3IHash();
 
                 if((karlsenNetwork == "testnet" && blockHeight >= KarlsencoinConstants.FishHashPlusForkHeightTestnet) || (karlsenNetwork == "mainnet" && blockHeight >= KarlsencoinConstants.FishHashPlusForkHeightMainnet))
                 {
@@ -294,8 +294,8 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 if(customBlockHeaderHasher is not Blake2b)
                     customBlockHeaderHasher = new Blake2b(Encoding.UTF8.GetBytes(KaspaConstants.CoinbaseBlockHash));
 
-                if(customCoinbaseHasher is not Blake3)
-                    customCoinbaseHasher = new Blake3();
+                if(customCoinbaseHasher is not Blake3IHash)
+                    customCoinbaseHasher = new Blake3IHash();
 
                 if(customShareHasher is not CShake256)
                     customShareHasher = new CShake256(null, Encoding.UTF8.GetBytes(KaspaConstants.CoinbaseHeavyHash));
@@ -306,18 +306,18 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 {
                     logger.Debug(() => $"blake3HardFork activated");
 
-                    if(customBlockHeaderHasher is not Blake3)
+                    if(customBlockHeaderHasher is not Blake3IHash)
                     {
                         string coinbaseBlockHash = KaspaConstants.CoinbaseBlockHash;
                         byte[] hashBytes = Encoding.UTF8.GetBytes(coinbaseBlockHash.PadRight(32, '\0')).Take(32).ToArray();
-                        customBlockHeaderHasher = new Blake3(hashBytes);
+                        customBlockHeaderHasher = new Blake3IHash(hashBytes);
                     }
 
-                    if(customCoinbaseHasher is not Blake3)
-                        customCoinbaseHasher = new Blake3();
+                    if(customCoinbaseHasher is not Blake3IHash)
+                        customCoinbaseHasher = new Blake3IHash();
 
-                    if(customShareHasher is not Blake3)
-                        customShareHasher = new Blake3();
+                    if(customShareHasher is not Blake3IHash)
+                        customShareHasher = new Blake3IHash();
                 }
                 else
                 {
@@ -344,14 +344,14 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
 
                 return new SpectreJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
             case "WALA":
-                if(customBlockHeaderHasher is not Blake3)
-                    customBlockHeaderHasher = new Blake3();
+                if(customBlockHeaderHasher is not Blake3IHash)
+                    customBlockHeaderHasher = new Blake3IHash();
 
                 if(customCoinbaseHasher is not Sha3_256)
                     customCoinbaseHasher = new Sha3_256();
 
-                if(customShareHasher is not Blake3)
-                    customShareHasher = new Blake3();
+                if(customShareHasher is not Blake3IHash)
+                    customShareHasher = new Blake3IHash();
 
                 return new WaglaylaJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
 

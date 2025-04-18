@@ -2576,6 +2576,36 @@
         "explorerTxLink": "https://explorer.radiantblockchain.org/tx/{0}",
         "explorerAccountLink": "https://explorer.radiantblockchain.org/address/{0}"
     },
+    "rincoin": {
+        "name": "Rincoin",
+        "canonicalName": "Rincoin",
+        "symbol": "RIN",
+        "family": "bitcoin",
+        "website": "https://coin.rin.so/",
+        "market": "",
+        "twitter": "",
+        "telegram": "",
+        "discord": "https://discord.gg/Ap7TUXYRBf",
+        "coinbaseHasher": {
+            "hash": "sha256d"
+        },
+        "headerHasher": {
+            "hash": "rinhash"
+        },
+        "blockHasher": {
+            "hash": "reverse",
+            "args": [
+                {
+                    "hash": "rinhash"
+                }
+            ]
+        },
+        "hasMWEB": true,
+        "diff1": "0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "explorerBlockLink": "https://rin-explorer.coin-miners.info/block/$hash$",
+        "explorerTxLink": "https://rin-explorer.coin-miners.info/tx/{0}",
+        "explorerAccountLink": "https://rin-explorer.coin-miners.info/address/{0}"
+    },
     "akitacoin": {
         "name": "Akitacoin",
         "symbol": "AKIC",
@@ -3545,6 +3575,35 @@
         "explorerBlockLink": "https://be.rosebird.org/block/$height$",
         "explorerTxLink": "https://be.rosebird.org/tx/{0}",
         "explorerAccountLink": "https://be.rosebird.org/address/{0}"
+    },
+    "skydoge": {
+        "name": "Skydoge",
+        "canonicalName": "Skydoge",
+        "symbol": "SKYDOGE",
+        "family": "bitcoin",
+        "website": "https://skydoge.net/",
+        "market": "",
+        "twitter": "https://twitter.com/skydogenet",
+        "telegram": "https://t.me/skydoge_net",
+        "discord": "https://discord.com/invite/GKHGDGbt8S",
+        "coinbaseHasher": {
+            "hash": "sha256d"
+        },
+        "headerHasher": {
+            "hash": "skydoge"
+        },
+        "blockHasher": {
+            "hash": "reverse",
+            "args": [
+                {
+                    "hash": "skydoge"
+                }
+            ]
+        },
+        "coinbaseTxVersion": 9,
+        "explorerBlockLink": "https://explorer.skydoge.net/block/$hash$",
+        "explorerTxLink": "https://explorer.skydoge.net/tx/{0}",
+        "explorerAccountLink": "https://explorer.skydoge.net/address/{0}"
     },
     "stakecube": {
         "name": "StakeCube",
@@ -4763,6 +4822,38 @@
         "explorerBlockLink": "https://explorer.yerbas.org/block/$height$",
         "explorerTxLink": "https://explorer.yerbas.org/tx/{0}",
         "explorerAccountLink": "https://explorer.yerbas.org/address/{0}"
+    },
+    "zero-dynamics-cash": {
+        "name": "Zero Dynamics Cash",
+        "symbol": "0DYNC",
+        "family": "bitcoin",
+        "website": "http://zero-dynamics.org",
+        "market": "https://app.exbitron.com/exchange/?market=0DYNC-USDT",
+        "github": "https://github.com/Zero-Dynamics/cash-core",
+        "explorer": "http://154.92.17.70:3008/",
+        "twitter": "https://x.com/Zero_Dyn_",
+        "telegram": "https://t.me/Zero_Dynamics",
+        "discord": "https://discord.gg/4W8WfW9qje",
+        "coinbaseHasher": {
+            "hash": "sha256d"
+        },
+        "headerHasher": {
+            "hash": "argon2d1000"
+        },
+        "blockHasher": {
+            "hash": "reverse",
+            "args": [
+                {
+                    "hash": "argon2d1000"
+                }
+            ]
+        },
+        "hasMasterNodes": true,
+        "shareMultiplier": 65536,
+        "coinbaseMinConfimations": 40,
+        "explorerBlockLink": "http://154.92.17.70:3008/block/$hash$",
+        "explorerTxLink": "http://154.92.17.70:3008/tx/{0}",
+        "explorerAccountLink": "http://154.92.17.70:3008/address/{0}"
     },
     "zetacoin": {
         "name": "Zetacoin",

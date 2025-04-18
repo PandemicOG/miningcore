@@ -10,11 +10,11 @@ using NBitcoin;
 namespace Miningcore.Blockchain.Kaspa.Custom.Waglayla;
 
 public class WaglaylaJob: KaspaJob {
-  protected Blake3 blake3Hasher;
+  protected Blake3IHash blake3Hasher;
   protected Sha3_256 sha3_256Hasher;
 
   public WaglaylaJob(IHashAlgorithm customBlockHeaderHasher, IHashAlgorithm customCoinbaseHasher, IHashAlgorithm customShareHasher): base(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher) {
-    this.blake3Hasher = new Blake3();
+    this.blake3Hasher = new Blake3IHash();
     this.sha3_256Hasher = new Sha3_256();
   }
 
