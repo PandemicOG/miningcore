@@ -770,6 +770,19 @@ public class PoolApiController : ApiControllerBase
         });
     }
 
+    [HttpGet("{poolId}/workerstats")]
+    public async Task<Responses.WorkerStats[]> GetWorkerStatsAsync(string poolId)
+    {
+        var pool = GetPool(poolId);
+
+        var result = await cf.Run(con => workerRepo.GetWorkerStatsAsync(con, null, pool.Id));
+
+        if(result == null)
+            throw new ApiException("No worker stats found", HttpStatusCode.NotFound);
+
+        return mapper.Map<Responses.WorkerStats[]>(result);
+    }
+
     [HttpGet("{poolId}/miners/{address}/workerstats")]
     public async Task<Responses.WorkerStats[]> GetWorkerStatsAsync(string poolId, string address)
     {
@@ -784,9 +797,31 @@ public class PoolApiController : ApiControllerBase
         var result = await cf.Run(con => workerRepo.GetWorkerStatsAsync(con, null, pool.Id, address));
 
         if(result == null)
-            throw new ApiException("No settings found", HttpStatusCode.NotFound);
+            throw new ApiException("No worker stats found", HttpStatusCode.NotFound);
 
         return mapper.Map<Responses.WorkerStats[]>(result);
+    }
+
+    [HttpGet("{poolId}/miners/{address}/workers/{worker}/workerstats")]
+    public async Task<Responses.WorkerStats> GetWorkerStatsAsync(string poolId, string address, string worker)
+    {
+        var pool = GetPool(poolId);
+
+        if(string.IsNullOrEmpty(address))
+            throw new ApiException("Invalid or missing miner address", HttpStatusCode.NotFound);
+
+        if(string.IsNullOrEmpty(worker))
+            throw new ApiException("Invalid or missing worker name", HttpStatusCode.NotFound);
+
+        if(pool.Template.Family == CoinFamily.Ethereum)
+            address = address.ToLower();
+
+        var result = await cf.Run(con => workerRepo.GetWorkerStatsAsync(con, null, pool.Id, address, worker));
+
+        if(result == null)
+            throw new ApiException("No worker stats found", HttpStatusCode.NotFound);
+
+        return mapper.Map<Responses.WorkerStats>(result);
     }
 
     #endregion // Actions

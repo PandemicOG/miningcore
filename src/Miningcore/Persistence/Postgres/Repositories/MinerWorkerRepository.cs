@@ -33,6 +33,15 @@ public class MinerWorkerRepository : IMinerWorkerRepository
             .ToArray();
     }
 
+    public async Task<MinerWorkerStats[]> GetWorkerStatsAsync(IDbConnection con, IDbTransaction tx, string poolId)
+    {
+        const string query = @"SELECT * FROM workerstats WHERE poolid = @poolId";
+
+        return (await con.QueryAsync<Entities.MinerWorkerStats>(new CommandDefinition(query, new { poolId })))
+            .Select(mapper.Map<MinerWorkerStats>)
+            .ToArray();
+    }
+
     public Task UpdateWorkerStatsAsync(IDbConnection con, IDbTransaction tx, MinerWorkerStats settings)
     {
         const string query = @"INSERT INTO workerstats(poolid, miner, worker, bestdifficulty, created, updated)
