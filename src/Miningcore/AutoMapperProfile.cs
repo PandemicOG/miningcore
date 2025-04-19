@@ -69,7 +69,7 @@ public class AutoMapperProfile : Profile
         CreateMap<WorkerPerformanceStats, Api.Responses.WorkerPerformanceStats>();
         CreateMap<WorkerPerformanceStatsContainer, Api.Responses.WorkerPerformanceStatsContainer>();
         CreateMap<MinerWorkerPerformanceStats, Api.Responses.MinerPerformanceStats>();
-        CreateMap<MinerWorkerStats, Api.Responses.MinerStats>();
+        CreateMap<MinerWorkerStats, Api.Responses.WorkerStats>();
 
 
 
