@@ -72,12 +72,12 @@ public class WaglaylaJob: KaspaJob {
     //var isBlockCandidate = true;
 
     // test if share meets at least workers current difficulty
-    if (!isBlockCandidate && ratio < 0.99) {
+    if (!isBlockCandidate && ratio < 0.49) {
       // check if share matched the previous difficulty from before a vardiff retarget
       if (context.VarDiff?.LastUpdate != null && context.PreviousDifficulty.HasValue) {
         ratio = shareDiff / context.PreviousDifficulty.Value;
 
-        if (ratio < 0.99)
+        if (ratio < 0.49)
           throw new StratumException(StratumError.LowDifficultyShare, $"low difficulty share ({shareDiff})");
 
         // use previous difficulty
