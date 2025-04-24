@@ -353,7 +353,7 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 if(customShareHasher is not Blake3IHash)
                     customShareHasher = new Blake3IHash();
 
-                return new WaglaylaJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
+                return new WagLaylaJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
 
         }
         
