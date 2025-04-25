@@ -6,9 +6,8 @@ using Miningcore.Extensions;
 using Miningcore.Stratum;
 using Miningcore.Util;
 using NBitcoin;
-using Miningcore.Blockchain.Bitcoin.DaemonResponses;
 
-namespace Miningcore.Blockchain.Kaspa.Custom.Waglayla;
+namespace Miningcore.Blockchain.Kaspa.Custom.WagLayla;
 
 public class WagLaylaJob : KaspaJobAltKHeavy
 {

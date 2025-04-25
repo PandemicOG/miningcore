@@ -18,7 +18,7 @@ using Miningcore.Blockchain.Kaspa.Custom.Cryptix;
 using Miningcore.Blockchain.Kaspa.Custom.Karlsencoin;
 using Miningcore.Blockchain.Kaspa.Custom.Pyrin;
 using Miningcore.Blockchain.Kaspa.Custom.Spectre;
-using Miningcore.Blockchain.Kaspa.Custom.Waglayla;
+using Miningcore.Blockchain.Kaspa.Custom.WagLayla;
 using NLog;
 using Miningcore.Configuration;
 using Miningcore.Crypto;
@@ -345,10 +345,14 @@ public class KaspaJobManager : JobManagerBase<KaspaJob>
                 return new SpectreJob(customBlockHeaderHasher, customCoinbaseHasher, customShareHasher);
             case "WALA":
                 if(customBlockHeaderHasher is not Blake3IHash)
-                    customBlockHeaderHasher = new Blake3IHash();
+                {
+                    string coinbaseBlockHash = KaspaConstants.CoinbaseBlockHash;
+                    byte[] hashBytes = Encoding.UTF8.GetBytes(coinbaseBlockHash.PadRight(32, '\0')).Take(32).ToArray();
+                    customBlockHeaderHasher = new Blake3IHash(hashBytes);
+                }
 
-                if(customCoinbaseHasher is not Sha3_256)
-                    customCoinbaseHasher = new Sha3_256();
+                if(customCoinbaseHasher is not Blake3IHash)
+                    customCoinbaseHasher = new Blake3IHash();
 
                 if(customShareHasher is not Blake3IHash)
                     customShareHasher = new Blake3IHash();
