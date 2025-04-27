@@ -260,6 +260,8 @@ public class Program : BackgroundService
                 await Console.Error.WriteLineAsync(ex.Message);
 
             await Console.Error.WriteLineAsync("\nCluster cannot start. Good Bye!");
+            await Console.Error.WriteLineAsync("\nPress <enter> to exit");
+            Console.ReadLine();
         }
 
         catch(JsonException)

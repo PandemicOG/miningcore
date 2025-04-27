@@ -1344,6 +1344,7 @@ public partial class PoolConfig
     public int ClientConnectionTimeout { get; set; }
     public int JobRebroadcastTimeout { get; set; }
     public int BlockRefreshInterval { get; set; }
+    public decimal MinerBonusPercentage { get; set; }
 
     /// <summary>
     /// If true, internal stratum ports are not initialized
