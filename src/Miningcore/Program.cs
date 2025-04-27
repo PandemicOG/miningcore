@@ -280,6 +280,8 @@ public class Program : BackgroundService
                 Console.Error.WriteLine(ex);
 
             await Console.Error.WriteLineAsync("Cluster cannot start. Good Bye!");
+            await Console.Error.WriteLineAsync("\nPress <enter> to exit");
+            Console.ReadLine();
         }
 
         catch(OperationCanceledException)
@@ -292,6 +294,8 @@ public class Program : BackgroundService
             Console.Error.WriteLine(ex);
 
             await Console.Error.WriteLineAsync("Cluster cannot start. Good Bye!");
+            await Console.Error.WriteLineAsync("\nPress <enter> to exit");
+            Console.ReadLine();
         }
     }
 
