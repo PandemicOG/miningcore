@@ -73,12 +73,10 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task<BalanceChange[]> PageBalanceChangesAsync(IDbConnection con, string poolId, string address, int page, int pageSize, string usageFilter, CancellationToken ct)
     {
-       string query = @"SELECT * FROM balance_changes WHERE poolid = @poolid
-            AND address = @address AND usage like '% @usageFilter %'
-            ORDER BY created DESC OFFSET @offset FETCH NEXT @pageSize ROWS ONLY";
+       string query = "SELECT * FROM balance_changes WHERE poolid = @poolid AND address = @address AND usage like '%" + usageFilter + "%' ORDER BY created DESC OFFSET @offset FETCH NEXT @pageSize ROWS ONLY";
 
         return (await con.QueryAsync<Entities.BalanceChange>(new CommandDefinition(query,
-                new { poolId, address, offset = page * pageSize, pageSize , usageFilter}, cancellationToken: ct)))
+                new { poolId, address, offset = page * pageSize, pageSize}, cancellationToken: ct)))
             .Select(mapper.Map<BalanceChange>)
             .ToArray();
     }
