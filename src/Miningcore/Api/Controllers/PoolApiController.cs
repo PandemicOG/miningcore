@@ -5,6 +5,7 @@ using System.Net;
 using Autofac;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Miningcore.Api.Extensions;
 using Miningcore.Api.Responses;
@@ -594,7 +595,7 @@ public class PoolApiController : ApiControllerBase
 
     [HttpGet("{poolId}/miners/{address}/balancechanges")]
     public async Task<Responses.BalanceChange[]> PageMinerBalanceChangesAsync(
-        string poolId, string address, [FromQuery] int page, [FromQuery] int pageSize = 15)
+        string poolId, string address, [FromQuery] int page, [FromQuery] int pageSize = 15, [FromQuery] string usageFilter="")
     {
         var pool = GetPool(poolId);
         var ct = HttpContext.RequestAborted;
@@ -606,7 +607,7 @@ public class PoolApiController : ApiControllerBase
             address = address.ToLower();
 
         var balanceChanges = (await cf.Run(con => paymentsRepo.PageBalanceChangesAsync(
-                con, pool.Id, address, page, pageSize, ct)))
+                con, pool.Id, address, page, pageSize, usageFilter, ct)))
             .Select(mapper.Map<Responses.BalanceChange>)
             .ToArray();
 
@@ -615,7 +616,7 @@ public class PoolApiController : ApiControllerBase
 
     [HttpGet("/api/v2/pools/{poolId}/miners/{address}/balancechanges")]
     public async Task<PagedResultResponse<Responses.BalanceChange[]>> PageMinerBalanceChangesV2Async(
-        string poolId, string address, [FromQuery] int page, [FromQuery] int pageSize = 15)
+        string poolId, string address, [FromQuery] int page, [FromQuery] int pageSize = 15, [FromQuery] string usageFilter = "")
     {
         var pool = GetPool(poolId);
         var ct = HttpContext.RequestAborted;
@@ -630,7 +631,7 @@ public class PoolApiController : ApiControllerBase
         uint pageCount = (uint) Math.Floor(itemCount / (double) pageSize);
 
         var balanceChanges = (await cf.Run(con => paymentsRepo.PageBalanceChangesAsync(
-                con, pool.Id, address, page, pageSize, ct)))
+                con, pool.Id, address, page, pageSize, usageFilter, ct)))
             .Select(mapper.Map<Responses.BalanceChange>)
             .ToArray();
 
