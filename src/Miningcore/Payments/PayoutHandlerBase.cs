@@ -108,15 +108,22 @@ public abstract class PayoutHandlerBase
 
                 //Gets active miners on pool and credits the bonus amount if configured
                 IStatsRepository statsRepo = new StatsRepository(mapper, clock);
-                var miners = await statsRepo.GetPoolMinerWorkerHashratesAsync(con, poolConfig.Id, ct);
-                var minerBonusAmount = bonusAmount / miners.Count();
-                foreach(var miner in miners)
+                var workers = await statsRepo.GetPoolMinerWorkerHashratesAsync(con, poolConfig.Id, ct);
+                if(workers != null && workers.Count() > 0)
                 {
-                    // skip bonus from pool wallet to pool wallet
-                    if(miner.Miner != poolConfig.Address)
+                    var miners = workers.Select(x => x.Miner).Distinct();
+                    if(miners != null && miners.Count() > 0)
                     {
-                        logger.Info(() => $"Crediting {miner.Miner} with bonus {FormatAmount(minerBonusAmount)}");
-                        await balanceRepo.AddAmountAsync(con, tx, poolConfig.Id, miner.Miner, minerBonusAmount, $"Mining Bonus for block {block.BlockHeight}");
+                        var minerBonusAmount = bonusAmount / miners.Count();
+                        foreach(var miner in miners)
+                        {
+                            // skip bonus from pool wallet to pool wallet
+                            if(miner != poolConfig.Address)
+                            {
+                                logger.Info(() => $"Crediting {miner} with bonus {FormatAmount(minerBonusAmount)}");
+                                await balanceRepo.AddAmountAsync(con, tx, poolConfig.Id, miner, minerBonusAmount, $"Mining Bonus for block {block.BlockHeight}");
+                            }
+                        }
                     }
                 }
             }
