@@ -70,8 +70,7 @@ public class WagLaylaJob : KaspaJobAltKHeavy
         {
             BlockHeight = (long) BlockTemplate.Header.DaaScore,
             NetworkDifficulty = Difficulty,
-            Difficulty = context.Difficulty / shareMultiplier,
-            ShareDifficulty = shareDiff
+            Difficulty = context.Difficulty / shareMultiplier
         };
 
         if(isBlockCandidate)
