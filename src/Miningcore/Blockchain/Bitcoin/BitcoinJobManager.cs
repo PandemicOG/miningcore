@@ -1,5 +1,6 @@
 using Autofac;
 using Miningcore.Blockchain.Bitcoin.Configuration;
+using Miningcore.Blockchain.Bitcoin.Custom.AdventurecoinJob;
 using Miningcore.Blockchain.Bitcoin.DaemonResponses;
 using Miningcore.Configuration;
 using Miningcore.Contracts;
@@ -106,6 +107,11 @@ public class BitcoinJobManager : BitcoinJobManagerBase<BitcoinJob>
 
     private BitcoinJob CreateJob()
     {
+        switch(coin.Symbol)
+        {
+            case "ADVC":
+                return new AdventurecoinJob();
+        }
         return new();
     }
 
