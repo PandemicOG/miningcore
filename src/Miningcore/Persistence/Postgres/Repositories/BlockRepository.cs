@@ -96,7 +96,7 @@ public class BlockRepository : IBlockRepository
 
     public async Task<Block[]> GetPendingBlocksForPoolAsync(IDbConnection con, string poolId)
     {
-        const string query = @"SELECT * FROM blocks WHERE poolid = @poolid AND status = @status";
+        const string query = @"SELECT * FROM blocks WHERE poolid = @poolid AND status = @status LIMIT 500";
 
         return (await con.QueryAsync<Entities.Block>(query, new { status = BlockStatus.Pending.ToString().ToLower(), poolid = poolId }))
             .Select(mapper.Map<Block>)
