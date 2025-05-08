@@ -94,11 +94,11 @@ public class BlockRepository : IBlockRepository
             .ToArray();
     }
 
-    public async Task<Block[]> GetPendingBlocksForPoolAsync(IDbConnection con, string poolId)
+    public async Task<Block[]> GetPendingBlocksForPoolAsync(IDbConnection con, string poolId, int blockLimit=10000)
     {
-        const string query = @"SELECT * FROM blocks WHERE poolid = @poolid AND status = @status order by created asc LIMIT 10000";
+        const string query = @"SELECT * FROM blocks WHERE poolid = @poolid AND status = @status order by created asc LIMIT @limit";
 
-        return (await con.QueryAsync<Entities.Block>(query, new { status = BlockStatus.Pending.ToString().ToLower(), poolid = poolId }))
+        return (await con.QueryAsync<Entities.Block>(query, new { status = BlockStatus.Pending.ToString().ToLower(), poolid = poolId, limit = blockLimit }))
             .Select(mapper.Map<Block>)
             .ToArray();
     }

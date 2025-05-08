@@ -120,7 +120,7 @@ public abstract class PayoutHandlerBase
                             // skip bonus from pool wallet to pool wallet
                             if(miner != poolConfig.Address)
                             {
-                                logger.Info(() => $"Crediting {miner} with bonus {FormatAmount(minerBonusAmount)}");
+                                //logger.Info(() => $"Crediting {miner} with bonus {FormatAmount(minerBonusAmount)}");
                                 await balanceRepo.AddAmountAsync(con, tx, poolConfig.Id, miner, minerBonusAmount, $"Mining Bonus for block {block.BlockHeight}");
                             }
                         }

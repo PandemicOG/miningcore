@@ -1116,6 +1116,7 @@ public partial class PoolPaymentProcessingConfig
     public decimal MinimumPayment { get; set; } // in pool-base-currency (ie. Bitcoin, not Satoshis)
     public PayoutScheme PayoutScheme { get; set; }
     public JToken PayoutSchemeConfig { get; set; }
+    public int ProcessingBlockLimit { get; set; }
 
     /// <summary>
     /// Arbitrary extension data

@@ -530,6 +530,9 @@
                 "minimumPayment": {
                     "type": "number"
                 },
+                "processingBlockLimit": {
+                    "type": "integer"
+                },
                 "payoutScheme": {
                     "type": "string",
                     "enum": [
