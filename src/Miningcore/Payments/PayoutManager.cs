@@ -153,7 +153,7 @@ public class PayoutManager : BackgroundService
     private async Task UpdatePoolBalancesAsync(IMiningPool pool, PoolConfig poolConfig, IPayoutHandler handler, IPayoutScheme scheme, CancellationToken ct)
     {
         // get pending blockRepo for pool
-        var pendingBlocks = await cf.Run(con => blockRepo.GetPendingBlocksForPoolAsync(con, poolConfig.Id));
+        var pendingBlocks = await cf.Run(con => blockRepo.GetPendingBlocksForPoolAsync(con, poolConfig.Id, poolConfig.PaymentProcessing.ProcessingBlockLimit ?? 10000));
 
         // classify
         var updatedBlocks = await handler.ClassifyBlocksAsync(pool, pendingBlocks, ct);
