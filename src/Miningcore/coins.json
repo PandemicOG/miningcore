@@ -347,7 +347,9 @@
         "coinbaseIgnoreAuxFlags": true,
         "explorerBlockLink": "https://www.blockchain.com/btc/block/$hash$",
         "explorerTxLink": "https://www.blockchain.com/btc/tx/{0}",
-        "explorerAccountLink": "https://www.blockchain.com/btc/address/{0}"
+        "explorerAccountLink": "https://www.blockchain.com/btc/address/{0}",
+        "marketSlug": "bitcoin",
+        "marketProvider": "coingecko"
     },
     "bitcoin-cash": {
         "name": "Bitcoin Cash",
@@ -375,7 +377,9 @@
         },
         "explorerBlockLink": "https://bchblockexplorer.com/block/$height$",
         "explorerTxLink": "https://bchblockexplorer.com/tx/{0}",
-        "explorerAccountLink": "https://bchblockexplorer.com/address/{0}"
+        "explorerAccountLink": "https://bchblockexplorer.com/address/{0}",
+        "marketSlug": "bitcoin-cash",
+        "marketProvider": "coingecko"
     },
     "bitcoin-diamond": {
         "name": "Bitcoin Diamond",
@@ -830,7 +834,9 @@
         ],
         "explorerBlockLink": "https://chainz.cryptoid.info/dgb/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/dgb/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm",
+        "marketSlug": "digibyte",
+        "marketProvider": "coingecko"
     },
     "digibyte-scrypt": {
         "name": "Digibyte Scrypt",
@@ -866,7 +872,9 @@
         ],
         "explorerBlockLink": "https://chainz.cryptoid.info/dgb/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/dgb/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm",
+        "marketSlug": "digibyte",
+        "marketProvider": "coingecko"
     },
     "digibyte-skein": {
         "name": "Digibyte Skein",
@@ -897,7 +905,9 @@
         ],
         "explorerBlockLink": "https://chainz.cryptoid.info/dgb/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/dgb/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm",
+        "marketSlug": "digibyte",
+        "marketProvider": "coingecko"
     },
     "digibyte-qubit": {
         "name": "Digibyte Qubit",
@@ -928,7 +938,9 @@
         ],
         "explorerBlockLink": "https://chainz.cryptoid.info/dgb/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/dgb/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm",
+        "marketSlug": "digibyte",
+        "marketProvider": "coingecko"
     },
     "digibyte-groestl": {
         "name": "Digibyte Groestl",
@@ -960,7 +972,9 @@
         ],
         "explorerBlockLink": "https://chainz.cryptoid.info/dgb/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/dgb/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/dgb/address.dws?{0}.htm",
+        "marketSlug": "digibyte",
+        "marketProvider": "coingecko"
     },
     "dogecoin": {
         "name": "Dogecoin",
@@ -1112,7 +1126,9 @@
         "hasCoinbasePayload": true,
         "explorerBlockLink": "https://explorer.ergon.network/block.dws?$height$.htm",
         "explorerTxLink": "https://explorer.ergon.network/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://explorer.ergon.network/address.dws?{0}.htm"
+        "explorerAccountLink": "https://explorer.ergon.network/address.dws?{0}.htm",
+        "marketSlug": "XRG_USDT",
+        "marketProvider": "coingecko"
     },
     "etitanium": {
         "name": "eTitanium ",
@@ -1445,7 +1461,9 @@
         "shareMultiplier": 256,
         "explorerBlockLink": "https://chainz.cryptoid.info/grs/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/grs/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/grs/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/grs/address.dws?{0}.htm",
+        "marketSlug": "groestlcoin",
+        "marketProvider": "coingecko"
     },
     "handshake": {
         "name": "Handshake",
@@ -2222,7 +2240,9 @@
         "shareMultiplier": 65536,
         "explorerBlockLink": "https://explorer.pepepow.org/block/$hash$",
         "explorerTxLink": "https://explorer.pepepow.org/tx/{0}",
-        "explorerAccountLink": "https://explorer.pepepow.org/address/{0}"
+        "explorerAccountLink": "https://explorer.pepepow.org/address/{0}",
+        "marketSlug": "pepepow",
+        "marketProvider": "coingecko"
     },
     "peercoin": {
         "name": "Peercoin",
@@ -3014,7 +3034,9 @@
         "progpower": "kawpow",
         "explorerBlockLink": "https://explorer.neurai.org/block/$hash$",
         "explorerTxLink": "https://explorer.neurai.org/tx/{0}",
-        "explorerAccountLink": "https://explorer.neurai.org/address/{0}"
+        "explorerAccountLink": "https://explorer.neurai.org/address/{0}",
+        "marketSlug": "neurai",
+        "marketProvider": "coingecko"
     },
     "clore": {
         "name": "Clore",
@@ -4493,7 +4515,9 @@
         "shareMultiplier": 256,
         "explorerBlockLink": "https://chainz.cryptoid.info/vtc/block.dws?$height$.htm",
         "explorerTxLink": "https://chainz.cryptoid.info/vtc/tx.dws?{0}.htm",
-        "explorerAccountLink": "https://chainz.cryptoid.info/vtc/address.dws?{0}.htm"
+        "explorerAccountLink": "https://chainz.cryptoid.info/vtc/address.dws?{0}.htm",
+        "marketSlug": "vertcoin",
+        "marketProvider": "coingecko"
     },
     "viacoin": {
         "name": "Viacoin",
@@ -6264,7 +6288,9 @@
         "addressBech32PrefixTestnet": "astrixtest",
         "explorerBlockLink": "https://explorer.astrix-network.com/blocks/$hash$",
         "explorerTxLink": "https://explorer.astrix-network.com/txs/{0}",
-        "explorerAccountLink": "https://explorer.astrix-network.com/addresses/{0}"
+        "explorerAccountLink": "https://explorer.astrix-network.com/addresses/{0}",
+        "marketSlug": "AIX_USDT",
+        "marketProvider": "coingecko"
     },
     "bitmeme": {
         "name": "Bitmeme",

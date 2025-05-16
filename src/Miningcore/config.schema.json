@@ -533,6 +533,15 @@
                 "processingBlockLimit": {
                     "type": "integer"
                 },
+                "autoExchangingFromEnabled": {
+                    "type": "boolean"
+                },
+                "autoExchangingToEnabled": {
+                    "type": "boolean"
+                },
+                "autoExchangingFee": {
+                    "type": "number"
+                },
                 "payoutScheme": {
                     "type": "string",
                     "enum": [

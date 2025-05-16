@@ -35,6 +35,12 @@ public class ApiCoinConfig
 
     [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string CanonicalName { get; set; }
+
+    [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string MarketSlug { get; set; }
+
+    [System.Text.Json.Serialization.JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string MarketProvider { get; set; }
 }
 
 public class ApiPoolPaymentProcessingConfig
@@ -43,6 +49,10 @@ public class ApiPoolPaymentProcessingConfig
     public decimal MinimumPayment { get; set; } // in pool-base-currency (ie. Bitcoin, not Satoshis)
     public string PayoutScheme { get; set; }
     public JToken PayoutSchemeConfig { get; set; }
+
+    public bool AutoExchangingFromEnabled { get; set; }
+    public bool AutoExchangingToEnabled { get; set; }
+    public decimal AutoExchangingFee { get; set; }
 
     [Newtonsoft.Json.JsonExtensionData]
     public IDictionary<string, object> Extra { get; set; }

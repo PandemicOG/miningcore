@@ -72,6 +72,9 @@ CREATE TABLE miner_settings
 	poolid TEXT NOT NULL,
 	address TEXT NOT NULL,
 	paymentthreshold decimal(28,12) NOT NULL,
+    autoconversionenabled bool NULL,
+    autoconversiondestination TEXT NULL,
+    autoconversiondestinationaddress TEXT NULL,
 	created TIMESTAMPTZ NOT NULL,
 	updated TIMESTAMPTZ NOT NULL,
 
