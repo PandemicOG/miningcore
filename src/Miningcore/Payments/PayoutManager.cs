@@ -213,6 +213,7 @@ public class PayoutManager : BackgroundService
             //get current exchange rates
             var coinGeckoConversionCoins = clusterConfig.Pools.Where(x => x.Enabled && x.PaymentProcessing.AutoExchangingToEnabled && x.Template.MarketProvider == MarketProvider.CoinGecko).Select(x => x.Template.MarketSlug).Distinct();
             var xeggexConversionCoins = clusterConfig.Pools.Where(x => x.Enabled && x.PaymentProcessing.AutoExchangingToEnabled && x.Template.MarketProvider == MarketProvider.Xeggex).Select(x => x.Template.MarketSlug).Distinct();
+            var bitcointryConversionCoins = clusterConfig.Pools.Where(x => x.Enabled && x.PaymentProcessing.AutoExchangingToEnabled && x.Template.MarketProvider == MarketProvider.Bitcointry).Select(x => x.Template.MarketSlug).Distinct();
 
             Dictionary<String, Decimal> marketValues = new Dictionary<string, decimal>();
             if(coinGeckoConversionCoins.Any())
@@ -242,6 +243,25 @@ public class PayoutManager : BackgroundService
                     if(!marketValues.ContainsKey(market))
                     {
                         marketValues.Add(market, lastPrice);
+                    }
+                }
+            }
+
+            if(bitcointryConversionCoins.Any())
+            {
+                foreach(var market in bitcointryConversionCoins)
+                {
+                    var marketClient = new RestSharp.RestClient("https://api.bitcointry.com");
+                    var marketRequest = new RestRequest(String.Format("/api/v2/ticker?pair={0}", market));
+                    var marketResponse = marketClient.Get(marketRequest);
+                    dynamic marketResponseData = JsonConvert.DeserializeObject(marketResponse.Content);
+                    if(marketResponseData != null && marketResponseData[market] != null)
+                    {
+                        var lastPrice = Convert.ToDecimal(marketResponseData[market].last_price);
+                        if(!marketValues.ContainsKey(market))
+                        {
+                            marketValues.Add(market, lastPrice);
+                        }
                     }
                 }
             }

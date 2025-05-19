@@ -197,11 +197,17 @@ public partial class BeamCoinTemplate : CoinTemplate
 
 public enum MarketProvider
 {
+    [EnumMember(Value = "")]
+    None,
+
     [EnumMember(Value = "coingecko")]
     CoinGecko,
 
     [EnumMember(Value = "xeggex")]
     Xeggex,
+
+    [EnumMember(Value ="bitcointry")]
+    Bitcointry
 }
 
 public enum BitcoinSubfamily
