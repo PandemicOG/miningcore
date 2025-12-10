@@ -48,6 +48,9 @@ public class ProgpowPool : PoolBase
         {
             case "FIRO":
                 return ProgpowUtils.FiroEncodeTarget(difficulty);
+
+            case "EVR":
+                return ProgpowUtils.EvrmoreEncodeTarget(difficulty);
             
             default:
                 return ProgpowUtils.RavencoinEncodeTarget(difficulty);
@@ -346,6 +349,9 @@ public class ProgpowPool : PoolBase
         {
             case "FIRO":
                 return ctx.Resolve<ProgpowJobManager>(new TypedParameter(typeof(IExtraNonceProvider), new FiroExtraNonceProvider(poolConfig.Id, clusterConfig.InstanceId)));
+            
+            case "EVR":
+                return ctx.Resolve<ProgpowJobManager>(new TypedParameter(typeof(IExtraNonceProvider), new EvrmoreExtraNonceProvider(poolConfig.Id, clusterConfig.InstanceId)));
             
             default:
                 return ctx.Resolve<ProgpowJobManager>(new TypedParameter(typeof(IExtraNonceProvider), new RavencoinExtraNonceProvider(poolConfig.Id, clusterConfig.InstanceId)));

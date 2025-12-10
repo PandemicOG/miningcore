@@ -2,6 +2,7 @@ using Autofac;
 using Miningcore.Blockchain.Bitcoin;
 using Miningcore.Blockchain.Bitcoin.Configuration;
 using Miningcore.Blockchain.Bitcoin.DaemonResponses;
+using Miningcore.Blockchain.Progpow.Custom.Evrmore;
 using Miningcore.Blockchain.Progpow.Custom.Firo;
 using Miningcore.Blockchain.Progpow.Custom.Kiiro;
 using Miningcore.Blockchain.Progpow.Custom.Realichain;
@@ -60,6 +61,8 @@ public class ProgpowJobManager : BitcoinJobManagerBase<ProgpowJob>
                 return new RealichainJob();
             case "TLS":
                 return new TelestaiJob();
+            case "EVR":
+                return new EvrmoreJob();
         }
         
         return new ProgpowJob();

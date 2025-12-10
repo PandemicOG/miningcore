@@ -2634,6 +2634,36 @@
     "explorerTxLink": "https://rin-explorer.coin-miners.info/tx/{0}",
     "explorerAccountLink": "https://rin-explorer.coin-miners.info/address/{0}"
   },
+  "evrmore": {
+        "name": "Evrmore",
+        "symbol": "EVR",
+        "family": "progpow",
+  "progpower": "evrprogpow",
+        "website": "https://evrmorecoin.org/",
+        "market": "https://coinpaprika.com/coin/evr-evrmore",
+        "twitter": "https://twitter.com/Evrcoin",
+        "telegram": "https://t.me/EvrmoreCoin",
+        "discord": "",
+        "coinbaseHasher": {
+            "hash": "sha256d"
+        },
+        "headerHasher": {
+            "hash": "sha256d"
+        },
+        "blockHasher": {
+            "hash": "reverse",
+            "args": [
+                {
+                    "hash": "sha256d"
+                }
+            ]
+        },
+        "hasMinerDevFund": true,
+        "shareMultiplier": 1,
+        "explorerBlockLink": "https://evr.cryptoscope.io/block/?blockheight=$height$",
+        "explorerTxLink": "https://evr.cryptoscope.io/tx/?txid={0}",
+        "explorerAccountLink": "https://evr.cryptoscope.io/address/?address={0}"
+    },
   "akitacoin": {
     "name": "Akitacoin",
     "symbol": "AKIC",
@@ -6750,9 +6780,9 @@
     "hasDeveloper": true,
     "shareMultiplier": 65536,
     "coinbaseMinConfimations": 30,
-    "explorerBlockLink": "https://explorer.adventurecoin.quest/#/height/$hash$",
-    "explorerTxLink": "https://explorer.adventurecoin.quest/#/transaction/{0}",
-    "explorerAccountLink": "https://explorer.adventurecoin.quest/#/address/{0}"
+    "explorerBlockLink": "https://adventurecoin.explorer.wellcodigital.com/block/$hash$",
+    "explorerTxLink": "https://adventurecoin.explorer.wellcodigital.com/tx/{0}",
+    "explorerAccountLink": "https://adventurecoin.explorer.wellcodigital.com/address/{0}"
   },
   "pepehash": {
     "name": "Pepehash",
