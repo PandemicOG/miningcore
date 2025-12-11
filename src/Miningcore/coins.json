@@ -2667,7 +2667,7 @@
   "neoxa": {
     "name": "Neoxa",
     "symbol": "NEOX",
-    "family": "ravencoin",
+    "family": "progpow",
     "progpower": "kawpow",
     "website": "https://www.neoxa.net/",
     "coinbaseHasher": {
