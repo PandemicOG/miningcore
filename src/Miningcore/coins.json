@@ -2664,6 +2664,32 @@
         "explorerTxLink": "https://evr.cryptoscope.io/tx/?txid={0}",
         "explorerAccountLink": "https://evr.cryptoscope.io/address/?address={0}"
     },
+  "neoxa": {
+    "name": "Neoxa",
+    "symbol": "NEOX",
+    "family": "ravencoin",
+    "progpower": "kawpow",
+    "website": "https://www.neoxa.net/",
+    "coinbaseHasher": {
+      "hash": "sha256d"
+    },
+    "headerHasher": {
+      "hash": "sha256d"
+    },
+    "blockHasher": {
+      "hash": "reverse",
+      "args": [
+        {
+          "hash": "sha256d"
+        }
+      ]
+    },
+    "hasCommunityAddress": true,
+    "shareMultiplier": 1,
+    "explorerBlockLink": "https://explorer.neoxa.net/block/$hash$",
+    "explorerTxLink": "https://explorer.neoxa.net/tx/{0}",
+    "explorerAccountLink": "https://explorer.neoxa.net/address/{0}"
+  },
   "akitacoin": {
     "name": "Akitacoin",
     "symbol": "AKIC",
