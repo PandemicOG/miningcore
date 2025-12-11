@@ -6,67 +6,71 @@ namespace Miningcore.Crypto.Hashing.Progpow.Evrprogpow;
 [Identifier("evrprogpow")]
 public class EvrProgpowLight : IProgpowLight
 {
-    public void Setup(int totalCache, ulong hardForkBlock = 0)
-    {
-        this.numCaches = totalCache;
-    }
-
-    private int numCaches; // Maximum number of caches to keep before eviction (only init, don't modify)
+    private int numCaches;
     private readonly object cacheLock = new();
     private readonly Dictionary<int, Cache> caches = new();
     private Cache future;
+
     public string AlgoName { get; } = "EvrProgpow";
+
+    public void Setup(int totalCache, ulong hardForkBlock = 0)
+    {
+        numCaches = totalCache;
+    }
 
     public void Dispose()
     {
-        foreach(var value in caches.Values)
+        foreach (var value in caches.Values)
             value.Dispose();
+
+        future?.Dispose();
     }
+
+
+    public async Task<IProgpowCache> GetCacheAsync(ILogger logger, int block, CancellationToken ct)
+    {
+        ct.ThrowIfCancellationRequested();
+        return await GetCacheAsync(logger, block);
+    }
+
 
     public async Task<IProgpowCache> GetCacheAsync(ILogger logger, int block)
     {
         var epoch = block / EvrmoreConstants.EpochLength;
         Cache result;
 
-        lock(cacheLock)
+        lock (cacheLock)
         {
-            if(numCaches == 0)
+            if (numCaches == 0)
                 numCaches = 3;
 
-            if(!caches.TryGetValue(epoch, out result))
+            if (!caches.TryGetValue(epoch, out result))
             {
-                // No cached cache, evict the oldest if the cache limit was reached
-                while(caches.Count >= numCaches)
+                while (caches.Count >= numCaches)
                 {
                     var toEvict = caches.Values.OrderBy(x => x.LastUsed).First();
                     var key = caches.First(pair => pair.Value == toEvict).Key;
-                    var epochToEvict = toEvict.Epoch;
 
-                    logger.Info(() => $"Evicting cache for epoch {epochToEvict} in favour of epoch {epoch}");
+                    logger.Info(() => $"Evicting cache for epoch {toEvict.Epoch} in favour of epoch {epoch}");
+
                     toEvict.Dispose();
                     caches.Remove(key);
                 }
-
-                // If we have the new cache pre-generated, use that, otherwise create a new one
-                if(future != null && future.Epoch == epoch)
+                if (future != null && future.Epoch == epoch)
                 {
                     logger.Debug(() => $"Using pre-generated cache for epoch {epoch}");
-
                     result = future;
                     future = null;
                 }
-
                 else
                 {
-                    logger.Info(() => $"No pre-generated cache available, creating new for epoch {epoch}");
+                    logger.Info(() => $"No pre-generated cache available, creating new cache for epoch {epoch}");
                     result = new Cache(epoch);
                 }
 
                 caches[epoch] = result;
             }
-
-            // If we used up the future cache, or need a refresh, regenerate
-            else if(future == null || future.Epoch <= epoch)
+            if (future == null || future.Epoch <= epoch)
             {
                 logger.Info(() => $"Pre-generating cache for epoch {epoch + 1}");
                 future = new Cache(epoch + 1);
@@ -79,7 +83,7 @@ public class EvrProgpowLight : IProgpowLight
             result.LastUsed = DateTime.Now;
         }
 
-        // get/generate current one
+        // Ensure current cache is generated
         await result.GenerateAsync(logger);
 
         return result;
